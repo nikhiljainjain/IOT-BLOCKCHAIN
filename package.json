@@ -1,0 +1,37 @@
+{
+  "name": "block-chain",
+  "version": "0.9.1",
+  "description": "learning project",
+  "main": "./app/app.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "dev-test": "nodemon dev-test",
+    "dev": "nodemon ./app/app.js",
+    "dev_t": "PORT=3002 P2P_PORT=5002 PEERS=ws://localhost:5001/ npm run dev",
+    "start": "node ./app/app.js"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "block-chain",
+    "nodejs"," cryptocurrency"
+  ],
+  "author": "NIKHIL JAIN",
+  "devDependencies": {
+    "jest": "^24.7.1",
+    "nodemon": "latest"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "crypto-js": "^3.1.9-1",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "elliptic": "^6.4.1",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "uuid": "^3.3.2",
+    "ws": "^6.2.1"
+  }
+}
