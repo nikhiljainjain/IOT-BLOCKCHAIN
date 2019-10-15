@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "e6058a5b-430f-4386-a18a-c5b6fe6536fa",
+		"name": "IOT-BLOCKCHAIN",
+		"description": "IoT device trust issues with blockchain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add and mine block",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "data",
+							"value": "my name is ok",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3001/mine",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"mine"
+					]
+				},
+				"description": "adding and mine block"
+			},
+			"response": []
+		},
+		{
+			"name": "Blockchain",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/blocks",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"blocks"
+					]
+				},
+				"description": "list of mined blocks"
+			},
+			"response": []
+		}
+	]
+}
