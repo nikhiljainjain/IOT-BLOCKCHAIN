@@ -4,8 +4,25 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
-let indexRouter = require('./routes/index');
-let pageRouter = require('./routes/page');
+const P2pServer = require('./p2p-server');
+const Blockchain = require('../blockchain');
+
+let bc = new Blockchain();
+let p2pServer = new P2pServer(bc);
+let data = {
+	smoke: {
+		value: 685,
+		trust: 10,
+		feedback: 10
+	},
+	
+	dht: {
+		temperature: 24,
+		humidity: 75,
+		trust: 10,
+		feedback: 10
+	}
+};
 
 const HTTP_PORT = process.env.PORT || 3001; //http port
 
@@ -21,8 +38,51 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/pages', pageRouter);
+app.get('/', function(req, res, next) {
+    res.render('index');
+});
+
+//it sends complete block chain
+app.get('/blocks', (req, res)=>{
+	res.json(bc.chain);
+});
+
+//get latest data from the blockchain
+app.get("/block-data", (req, res)=>{
+	res.json({data: bc.chain[bc.chain.length - 1]});
+});
+
+//
+
+//Get data dht sensor data
+app.post("/smoke-data", (req, res)=>{
+	data.smoke.value = (Math.random());//req.body.data;
+	console.log(req.body);
+	if (process.env.DEVICE === "RPI"){
+		sensor.read(11, 26, function(err, temperature, humidity) {
+			if (!err) {
+				console.log(`temp: ${temperature}°C, humidity: ${humidity}%`);
+				data.dht.temperature = temperature;
+				data.dht.humidity = humidity;
+			}
+		});
+	}
+	res.json({msg: "Smoke sensor data received"});
+});
+
+//Getting data and mine to the blockchain
+/*app.post('/mine', (req, res)=>{
+	const nwBlock = bc.addBlock(req.body.data);
+	console.log(`New block added  ${nwBlock.toString()}`);
+	p2pServer.syncChain();
+	res.status(302).redirect('/blocks');
+});*/
+
+setInterval(()=> {
+	const nwBlock = bc.addBlock(data);
+	console.log(`New block added  ${nwBlock.toString()}`);
+	p2pServer.syncChain();
+}, 60000);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,5 +100,5 @@ app.use(function(err, req, res, next) {
 	res.render('error');
 });
 
+p2pServer.listen();
 app.listen(HTTP_PORT, () => console.log(`Listening HTTP request on Port ${HTTP_PORT}`));
-module.exports = app;

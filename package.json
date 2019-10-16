@@ -5,17 +5,19 @@
   "main": "./app/app.js",
   "scripts": {
     "test": "jest --watchAll",
+    "rpi":"DEVICE=RPI nodemon ./app/app.js",
     "dev-test": "nodemon dev-test",
     "dev": "nodemon ./app/app.js",
     "dev_t": "PORT=3002 P2P_PORT=5002 PEERS=ws://localhost:5001/ npm run dev",
-    "start": "node ./app/app.js"
+    "start": "nodemon ./app/app.js"
   },
   "jest": {
     "testEnvironment": "node"
   },
   "keywords": [
     "block-chain",
-    "nodejs"," cryptocurrency"
+    "nodejs",
+    " cryptocurrency"
   ],
   "author": "NIKHIL JAIN",
   "devDependencies": {
@@ -28,6 +30,7 @@
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "elliptic": "^6.4.1",
+    "eslint": "^6.5.1",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
