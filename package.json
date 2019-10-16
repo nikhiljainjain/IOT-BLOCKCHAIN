@@ -1,29 +1,38 @@
 {
-  "name": "block-chain",
-  "version": "0.9.1",
+  "name": "IOT-BLOCKCHAIN",
+  
+  "version": "1.0.0",
+  
   "description": "learning project",
+  
   "main": "./app/app.js",
+  
   "scripts": {
     "test": "jest --watchAll",
-    "rpi":"DEVICE=RPI nodemon ./app/app.js",
+    "rpi":"DEVICE=RPI node ./app/app.js",
     "dev-test": "nodemon dev-test",
     "dev": "nodemon ./app/app.js",
     "dev_t": "PORT=3002 P2P_PORT=5002 PEERS=ws://localhost:5001/ npm run dev",
-    "start": "nodemon ./app/app.js"
+    "start": "node ./app/app.js"
   },
+  
   "jest": {
     "testEnvironment": "node"
   },
+  
   "keywords": [
     "block-chain",
     "nodejs",
     " cryptocurrency"
   ],
-  "author": "NIKHIL JAIN",
+  
+  "author": "NIKHIL JAIN, SAMARTH GUPTA, RISHAB JAIN, VARUN V",
+  
   "devDependencies": {
     "jest": "^24.7.1",
     "nodemon": "latest"
   },
+  
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "crypto-js": "^3.1.9-1",
@@ -36,5 +45,16 @@
     "morgan": "~1.9.0",
     "uuid": "^3.3.2",
     "ws": "^6.2.1"
-  }
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikhiljainjain/IOT-BLOCKCHAIN.git"
+  },
+  
+  "bugs": {
+    "url": "https://github.com/nikhiljainjain/IOT-BLOCKCHAIN/issues"
+  },
+  
+  "homepage": "https://github.com/nikhiljainjain/IOT-BLOCKCHAIN#readme"
 }

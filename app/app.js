@@ -12,15 +12,13 @@ let p2pServer = new P2pServer(bc);
 let data = {
 	smoke: {
 		value: 685,
-		trust: 10,
-		feedback: 10
+		trust: 10
 	},
 	
 	dht: {
-		temperature: 24,
-		humidity: 75,
-		trust: 10,
-		feedback: 10
+		temperature: 14,
+		humidity: 65,
+		trust: 10
 	}
 };
 
@@ -52,7 +50,33 @@ app.get("/block-data", (req, res)=>{
 	res.json({data: bc.chain[bc.chain.length - 1]});
 });
 
-//
+//user query
+app.get("/query", (req, res)=>{
+	console.log(req.query);
+	let msg =  null;
+	if (req.query.location === "x"){
+		msg = ( data.dht.temperature > 30) ? "OK" : "NOT ADVISED";
+	}else if (req.query.location === "y"){
+		msg = ( data.smoke.value < 700 ) ? "OK" : "NOT ADVISED";
+	}
+	res.json({ msg });
+});
+
+app.post("/feedback", (req, res)=>{
+	const { sensor, trust } = req.body;
+	res.json({ msg: "Thank for your valuable feedback."});
+	if (sensor === "dht"){
+		if (trust === "false")
+			(data.dht.trust > 1) ? (data.dht.trust--):null;
+		else	
+			(data.dht.trust < 10) ? (data.dht.trust++):null;
+	}else{
+		if (trust === "false")
+			(data.smoke.trust > 1) ? (data.smoke.trust--):null;
+		else	
+			(data.smoke.trust < 10) ? (data.smoke.trust++):null;
+	}
+});
 
 //Get data dht sensor data
 app.post("/smoke-data", (req, res)=>{

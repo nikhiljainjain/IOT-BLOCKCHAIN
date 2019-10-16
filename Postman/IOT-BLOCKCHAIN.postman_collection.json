@@ -64,6 +64,145 @@
 				"description": "list of mined blocks"
 			},
 			"response": []
+		},
+		{
+			"name": "Smoge Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "data",
+							"value": "mrx",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3001/smoke-data",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"smoke-data"
+					]
+				},
+				"description": "Receiving data from mq-2 sensor "
+			},
+			"response": []
+		},
+		{
+			"name": "Latest Data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/block-data",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"block-data"
+					]
+				},
+				"description": "last block data"
+			},
+			"response": []
+		},
+		{
+			"name": "User query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:3001/query?location=y",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"query"
+					],
+					"query": [
+						{
+							"key": "location",
+							"value": "y"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User feedback",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "sensor",
+							"value": "dht",
+							"type": "text"
+						},
+						{
+							"key": "trust",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "sensor",
+							"value": "smoke",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "trust",
+							"value": "true",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3001/feedback",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"feedback"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
