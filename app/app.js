@@ -4,6 +4,7 @@ let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 
+const sensor = require("node-dht-sensor");
 const P2pServer = require('./p2p-server');
 const Blockchain = require('../blockchain');
 const Feedback = require("./Feedback");
@@ -94,6 +95,7 @@ setInterval(()=> {
 				fb.data.dht.humidity = humidity;
 			}
 		});
+		p2pServer.broadcastFeedback(fb.data);
 	}
 	const nwBlock = bc.addBlock(fb.data);
 	console.log(`New block added  ${nwBlock.toString()}`);
