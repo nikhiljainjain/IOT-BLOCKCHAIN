@@ -71,17 +71,8 @@ app.post("/feedback", (req, res)=>{
 
 //Get data dht sensor data
 app.post("/smoke-data", (req, res)=>{
-	fb.data.smoke.value = req.body.data;
-	console.log(req.body);
-	if (process.env.DEVICE === "RPI"){
-		sensor.read(11, 26, function(err, temperature, humidity) {
-			if (!err) {
-				console.log(`temp: ${temperature}°C, humidity: ${humidity}%`);
-				fb.data.dht.temperature = temperature;
-				fb.data.dht.humidity = humidity;
-			}
-		});
-	}
+	fb.data.smoke.value = Number(req.body.data);
+	console.log(req.body.data);
 	res.json({msg: "Smoke sensor data received"});
 	p2pServer.broadcastFeedback(fb.data);
 });
@@ -95,6 +86,15 @@ app.post("/smoke-data", (req, res)=>{
 });*/
 
 setInterval(()=> {
+	if (process.env.DEVICE === "RPI"){
+		sensor.read(11, 26, function(err, temperature, humidity) {
+			if (!err) {
+				console.log(`Temperature: ${temperature}°C, Humidity: ${humidity}%`);
+				fb.data.dht.temperature = temperature;
+				fb.data.dht.humidity = humidity;
+			}
+		});
+	}
 	const nwBlock = bc.addBlock(fb.data);
 	console.log(`New block added  ${nwBlock.toString()}`);
 	p2pServer.syncChain();

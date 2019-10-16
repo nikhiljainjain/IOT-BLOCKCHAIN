@@ -66,7 +66,7 @@ void loop() {
 
   delay(1000);
   digitalWrite(LED, LOW); 
-  delay(1000); 
+  delay(10000); 
 }
 
 void request_send(String url, int data){  
@@ -83,8 +83,9 @@ void request_send(String url, int data){
   http.addHeader("Upgrade-Insecure-Requests","1");
   http.addHeader("Cache-Control","max-age=0");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");   
-  
-  int httpCode = http.POST(String("data="+data)); 
+
+  String postData = "data="+String(data);
+  int httpCode = http.POST(postData); 
   String payload = http.getString();   //Get the request response payload
   Serial.println(payload); 
   http.end();
