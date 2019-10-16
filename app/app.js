@@ -6,21 +6,11 @@ let logger = require('morgan');
 
 const P2pServer = require('./p2p-server');
 const Blockchain = require('../blockchain');
+const Feedback = require("./Feedback");
 
 let bc = new Blockchain();
-let p2pServer = new P2pServer(bc);
-let data = {
-	smoke: {
-		value: 685,
-		trust: 10
-	},
-	
-	dht: {
-		temperature: 14,
-		humidity: 65,
-		trust: 10
-	}
-};
+let fb = new Feedback();
+let p2pServer = new P2pServer(bc, fb);
 
 const HTTP_PORT = process.env.PORT || 3001; //http port
 
@@ -55,9 +45,9 @@ app.get("/query", (req, res)=>{
 	console.log(req.query);
 	let msg =  null;
 	if (req.query.location === "x"){
-		msg = ( data.dht.temperature > 30) ? "OK" : "NOT ADVISED";
+		msg = ( fb.data.dht.temperature > 30) ? "OK" : "NOT ADVISED";
 	}else if (req.query.location === "y"){
-		msg = ( data.smoke.value < 700 ) ? "OK" : "NOT ADVISED";
+		msg = ( fb.data.smoke.value < 700 ) ? "OK" : "NOT ADVISED";
 	}
 	res.json({ msg });
 });
@@ -67,31 +57,33 @@ app.post("/feedback", (req, res)=>{
 	res.json({ msg: "Thank for your valuable feedback."});
 	if (sensor === "dht"){
 		if (trust === "false")
-			(data.dht.trust > 1) ? (data.dht.trust--):null;
+			(fb.data.dht.trust > 1) ? (fb.data.dht.trust--):null;
 		else	
-			(data.dht.trust < 10) ? (data.dht.trust++):null;
+			(fb.data.dht.trust < 10) ? (fb.data.dht.trust++):null;
 	}else{
 		if (trust === "false")
-			(data.smoke.trust > 1) ? (data.smoke.trust--):null;
+			(fb.data.smoke.trust > 1) ? (fb.data.smoke.trust--):null;
 		else	
-			(data.smoke.trust < 10) ? (data.smoke.trust++):null;
+			(fb.data.smoke.trust < 10) ? (fb.data.smoke.trust++):null;
 	}
+	p2pServer.broadcastFeedback(fb.data);
 });
 
 //Get data dht sensor data
 app.post("/smoke-data", (req, res)=>{
-	data.smoke.value = (Math.random());//req.body.data;
+	fb.data.smoke.value = req.body.data;
 	console.log(req.body);
 	if (process.env.DEVICE === "RPI"){
 		sensor.read(11, 26, function(err, temperature, humidity) {
 			if (!err) {
 				console.log(`temp: ${temperature}°C, humidity: ${humidity}%`);
-				data.dht.temperature = temperature;
-				data.dht.humidity = humidity;
+				fb.data.dht.temperature = temperature;
+				fb.data.dht.humidity = humidity;
 			}
 		});
 	}
 	res.json({msg: "Smoke sensor data received"});
+	p2pServer.broadcastFeedback(fb.data);
 });
 
 //Getting data and mine to the blockchain

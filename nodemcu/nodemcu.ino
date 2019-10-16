@@ -61,7 +61,7 @@ void loop() {
   request_send("http://192.168.43.121:3001/smoke-data/", analogSensor);
 
   //sending data to rpi
-  //request_send("http://192.168.43.124:3001/smoke-data/", analogSensor);
+  request_send("http://192.168.43.124:3001/smoke-data/", analogSensor);
 
   delay(1000);
   digitalWrite(LED, LOW); 
@@ -83,7 +83,7 @@ void request_send(String url, int data){
   http.addHeader("Cache-Control","max-age=0");
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");   
   
-  int httpCode = http.POST(String(data)); 
+  int httpCode = http.POST(String("{'data'"+data+"}")); 
   String payload = http.getString();   //Get the request response payload
   Serial.println(payload); 
   http.end();

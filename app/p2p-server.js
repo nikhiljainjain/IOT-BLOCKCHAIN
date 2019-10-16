@@ -2,11 +2,16 @@ const WebSocket = require('ws');
 
 const P2P_PORT = process.env.P2P_PORT || 5001;
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
+const MESSAGE_TYPE = {
+    chain: 'CHAIN',
+    feedback: 'FEEDBACK'
+};
 
 class P2pServer {
 
-    constructor(blockchain) {
+    constructor(blockchain, feedback) {
         this.blockchain = blockchain;
+        this.feedback = feedback;
         this.sockets = [];
     }
 
@@ -33,13 +38,30 @@ class P2pServer {
     }
 
     sendChain(socket) {
-        socket.send(JSON.stringify({ chain: this.blockchain.chain }));
+        socket.send(JSON.stringify({ type: MESSAGE_TYPE.chain, chain: this.blockchain.chain }));
+    }
+
+    sendFeedback(socket, feedback) {
+        socket.send(JSON.stringify({ type: MESSAGE_TYPE.feedback, feedback }));
     }
 
     messageHandler(socket) {
         socket.on('message', message => {
             const data = JSON.parse(message);
-            this.blockchain.replaceChain(data.chain);    
+            switch (data.type) {
+                case MESSAGE_TYPE.chain:
+                    this.blockchain.replaceChain(data.chain);
+                    break;
+                case MESSAGE_TYPE.feedback:
+                    this.feedback.replaceData(data.feedback);
+                    break;
+            } 
+        });
+    }
+
+    broadcastFeedback(feedback) {
+        this.sockets.forEach(socket => {
+            this.sendFeedback(socket, feedback);
         });
     }
 
