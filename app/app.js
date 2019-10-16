@@ -95,7 +95,7 @@ app.post("/smoke-data", (req, res)=>{
 });*/
 
 setInterval(()=> {
-	const nwBlock = bc.addBlock(data);
+	const nwBlock = bc.addBlock(fb.data);
 	console.log(`New block added  ${nwBlock.toString()}`);
 	p2pServer.syncChain();
 }, 60000);
