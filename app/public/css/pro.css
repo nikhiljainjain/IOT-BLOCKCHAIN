@@ -1,0 +1,61 @@
+form{ 
+    padding: 20px 0px 5px 40px; 
+    text-align: left; 
+}
+
+input{
+	border: none;
+	outline: none;
+	background-color: inherit;
+}
+
+label{
+	font-weight: 700;
+}
+
+.body{
+	background-color: #29ABE2;
+	font-family: 'Raleway', sans-serif;
+	margin-top: 0;
+}
+
+.header{
+	color: white;
+	width: 60%;
+	height: 100px;
+	margin: 0.5rem auto;
+	padding-top: 50px ;
+	text-align: center;
+}
+
+.head{
+	font-size: 30px;
+	font-weight: 600;
+	margin-bottom: 50px;
+}
+
+.form{
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 5px;
+	height: 20rem;
+	width: 20rem;
+	margin: 10% auto;
+}
+
+.form-group{
+	width: 80%;
+	margin: 0;
+}
+
+.input1 { 
+    outline: none; 
+    border: none; 
+    height: 30px; 
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.btn-light{
+	outline: none;
+}

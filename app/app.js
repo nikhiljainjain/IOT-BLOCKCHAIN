@@ -27,34 +27,37 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res, next) {
-    res.render('index');
+    res.render('pro');
 });
 
 //it sends complete block chain
 app.get('/blocks', (req, res)=>{
-	res.json(bc.chain);
+	res.render("block-chain", { msg: bc.chain});
 });
 
 //get latest data from the blockchain
 app.get("/block-data", (req, res)=>{
-	res.json({data: bc.chain[bc.chain.length - 1]});
+	res.render("block", { msg: bc.chain[bc.chain.length - 1]});
 });
 
 //user query
 app.get("/query", (req, res)=>{
 	console.log(req.query);
-	let msg =  null;
+	let msg = null;
+	let sensor = null;
 	if (req.query.location === "x"){
-		msg = ( fb.data.dht.temperature > 30) ? "OK" : "NOT ADVISED";
+		sensor = "dht";
+		msg = ( fb.data.dht.temperature > 20) ? "OK" : "NOT Advisable";
 	}else if (req.query.location === "y"){
-		msg = ( fb.data.smoke.value < 700 ) ? "OK" : "NOT ADVISED";
+		sensor = "smoke";
+		msg = ( fb.data.smoke.value < 700 ) ? "OK" : "NOT Advisable";
 	}
-	res.json({ msg });
+	res.render("feedback", { msg, feedback: true , sensor });
 });
 
 app.post("/feedback", (req, res)=>{
 	const { sensor, trust } = req.body;
-	res.json({ msg: "Thank for your valuable feedback."});
+	res.render("msg", { msg: "Thank for your valuable feedback."});
 	if (sensor === "dht"){
 		if (trust === "false")
 			(fb.data.dht.trust > 1) ? (fb.data.dht.trust--):null;

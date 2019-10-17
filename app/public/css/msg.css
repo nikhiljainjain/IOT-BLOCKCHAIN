@@ -1,0 +1,51 @@
+body{
+	background-color: #29ABE2;
+	font-family: 'Raleway', sans-serif;
+	margin-top: 5px;
+}
+
+label{
+	font-weight: 700;
+	text-decoration: underline;
+}
+
+input{
+	margin-left: 1.5rem;
+}
+
+.message{
+	text-align: center;
+	height: 12rem;
+	width: 50rem;
+	margin: 0 auto;
+	padding: 2rem 5rem;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-weight: 700;
+}
+
+.message1{
+	height: 15rem;
+	width: 50rem;
+	margin: 2rem auto;
+	padding: 2rem 3rem;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.header{
+	color: white;
+	width: 60%;
+	height: 100px;
+	margin: 0.5rem auto;
+	padding-top: 50px ;
+	text-align: center;
+}
+
+.head{
+	font-size: 30px;
+	font-weight: 600;
+	margin-bottom: 50px;
+}
