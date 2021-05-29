@@ -38,7 +38,7 @@
     "morgan": "~1.9.0",
     "node-dht-sensor": "^0.4.0",
     "uuid": "^3.3.2",
-    "ws": "^6.2.1"
+    "ws": "^7.4.6"
   },
   "repository": {
     "type": "git",
