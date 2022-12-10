@@ -33,7 +33,7 @@
     "ejs": "~2.5.7",
     "elliptic": "^6.4.1",
     "eslint": "^6.5.1",
-    "express": "~4.16.0",
+    "express": "~4.17.3",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
     "node-dht-sensor": "^0.4.0",
